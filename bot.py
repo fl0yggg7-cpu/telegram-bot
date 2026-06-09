@@ -12,7 +12,6 @@ model = genai.GenerativeModel('gemini-1.5-flash')
 bot = telebot.TeleBot(BOT_TOKEN)
 users = {}
 
-# Flask app для health check
 app = Flask(__name__)
 
 @app.route('/')
@@ -22,10 +21,8 @@ def health():
 def run_flask():
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
 
-# Запускаем Flask в отдельном потоке, чтобы не блокировать бота
 threading.Thread(target=run_flask, daemon=True).start()
 
-# Остальная логика бота (твоя)
 @bot.message_handler(commands=['start'])
 def start(message):
     uid = message.chat.id
